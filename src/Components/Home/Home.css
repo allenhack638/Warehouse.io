@@ -1,0 +1,14 @@
+.navbar {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  max-width: 800px;
+  margin: auto;
+}
+
+/* Style the navigation heading */
+.nav-heading {
+  text-align: center;
+  margin: 0;
+  font-size: 24px; /* Example font size */
+}
