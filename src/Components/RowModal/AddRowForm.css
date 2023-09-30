@@ -29,12 +29,10 @@
 .close {
   position: absolute;
   top: 15px;
-  right: 15px;
+  right: 20px;
   cursor: pointer;
-  color: white;
-  padding: 0px 5px;
-  border-radius: 50%;
-  background-color: red;
+  color: #000000;
+  font-size: 20px;
 }
 
 form {

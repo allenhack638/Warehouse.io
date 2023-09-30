@@ -1,6 +1,9 @@
 import * as yup from "yup";
 
 export function getColumns(data) {
+  if (!data) return [];
+  if (data?.length === 0) return [];
+
   const extractColumnKeys = (data) => {
     const columnKeys = new Set();
     data.forEach((item) => {

@@ -23,7 +23,12 @@ export const CreateRow = async (values) => {
 };
 
 export const SyncData = async () => {
-  const response = await fetch(BASE_URL);
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch(BASE_URL);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    toast.error("Failed to fetch");
+    console.log(error);
+  }
 };
