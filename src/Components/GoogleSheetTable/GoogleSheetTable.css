@@ -47,8 +47,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
   gap: 5px;
+  margin: auto 0px;
 }
 .your-container a:hover {
   color: #004a99;
@@ -83,7 +83,9 @@
   .your-container {
     padding: 10px;
   }
-
+  .your-container a {
+    margin-bottom: 15px;
+  }
   .fetch-button {
     padding: 8px 16px;
     font-size: 14px;
@@ -91,7 +93,6 @@
   }
 
   .data-table {
-    /* display: block; */
     width: 100%;
     overflow-x: auto;
   }
