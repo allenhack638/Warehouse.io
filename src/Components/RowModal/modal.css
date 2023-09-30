@@ -82,6 +82,11 @@ button[type="button"] {
   margin: 0px;
   padding: 0px;
 }
+.add-an-row{
+  margin: 0;
+  text-align: center;
+  text-decoration: underline;
+}
 .disabled {
   cursor: not-allowed;
   opacity: 0.4;

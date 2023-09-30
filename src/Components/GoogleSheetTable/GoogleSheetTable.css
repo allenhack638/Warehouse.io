@@ -14,6 +14,7 @@
   cursor: pointer;
   margin-bottom: 20px;
   margin: auto 10px;
+  margin-left: 0px;
 }
 
 .fetch-button:disabled {
@@ -23,8 +24,14 @@
 .fetch-button:hover {
   background-color: #004a99;
 }
+.your-container a {
+  text-decoration: none;
+}
+.your-container a:hover {
+  color: #004a99;
+  text-decoration: underline;
+}
 
-/* Table styles */
 .data-table {
   width: 100%;
   border-collapse: collapse;

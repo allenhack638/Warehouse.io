@@ -1,26 +1,17 @@
 import React from "react";
 import { Formik, Form } from "formik";
 import * as yup from "yup";
-import "./modal.css";
+import "./Modal.css";
+
+import { CreateRow } from "../apicalls/ApiCalls";
 
 const AddRowForm = ({ onClose }) => {
-
-
-  
-  function handleSubmit(values) {
-    fetch("https://sheetdb.io/api/v1/e7j8052axa9vc", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        data: [values],
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
+  async function handleSubmit(values) {
+    try {
+      await CreateRow(values);
+    } catch (error) {
+      console.log(error);
+    }
     onClose();
   }
 
@@ -41,7 +32,7 @@ const AddRowForm = ({ onClose }) => {
         <span className="close" onClick={onClose}>
           &times;
         </span>
-
+        <h3 className="add-an-row">Add an Row</h3>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}

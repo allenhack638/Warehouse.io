@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
-import AddRowForm from "../RowModal/AddRowForm";
 import "./GoogleSheetTable.css";
+
+import AddRowForm from "../RowModal/AddRowForm";
+import { getColumns } from "../Functions/Function";
+import { SyncData } from "../apicalls/ApiCalls";
 
 const GoogleSheetTable = () => {
   const [data, setData] = useState([]);
@@ -10,67 +13,58 @@ const GoogleSheetTable = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-
       try {
-        fetch("https://sheetdb.io/api/v1/e7j8052axa9vc")
-          .then((response) => response.json())
-          .then((data) => setData(data));
+        const data = await SyncData();
+        setData(data);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching data:");
       }
-
       setLoading(false);
     };
     fetchData();
   }, []);
 
-  const syncData = async () => {
-    setLoading(true);
-
-    try {
-      fetch("https://sheetdb.io/api/v1/e7j8052axa9vc")
-        .then((response) => response.json())
-        .then((data) => setData(data));
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-
-    setLoading(false);
-  };
-
-  const extractColumnKeys = (data) => {
-    const columnKeys = new Set();
-    data.forEach((item) => {
-      Object.keys(item).forEach((key) => {
-        columnKeys.add(key);
-      });
-    });
-    return Array.from(columnKeys);
-  };
-
-  // Extract column keys from the data
-  const columnKeys = extractColumnKeys(data);
-
-  // Create columns dynamically
-  const columns = columnKeys.map((key) => ({
-    key,
-    label: key,
-  }));
-
   return (
     <>
-      {FormModal && <AddRowForm onClose={() => setFormModal(false)} />}
+      {FormModal && (
+        <AddRowForm
+          onClose={async () => {
+            setFormModal(false);
+            setLoading(true);
+            const data = await SyncData();
+            setData(data);
+            setLoading(false);
+          }}
+        />
+      )}
       <div className="your-container">
-        <button className="fetch-button" onClick={syncData} disabled={loading}>
-          {loading ? "syncing..." : "Sync"}
+        <button
+          className="fetch-button"
+          onClick={async () => {
+            setLoading(true);
+            const data = await SyncData();
+            setData(data);
+            setLoading(false);
+          }}
+          disabled={loading}
+        >
+          {loading ? "Syncing..." : "Sync"}
         </button>
+
         <button onClick={() => setFormModal(true)} className="fetch-button">
           Add a Row
         </button>
+
+        <a
+          href="https://docs.google.com/spreadsheets/d/1MVWKhUYJgcaxBXu3ESugjfV9aEJIyiwbGECqRD3VS0o/edit#gid=0"
+          target="_blank"
+        >
+          Google Sheet
+        </a>
         <table className="data-table">
           <thead>
             <tr>
-              {columns.map((column) => (
+              {getColumns(data)?.map((column) => (
                 <th key={column.key} className="table-header">
                   {column.label}
                 </th>
@@ -80,7 +74,7 @@ const GoogleSheetTable = () => {
           <tbody>
             {data.map((item, rowIndex) => (
               <tr key={rowIndex} className="table-row">
-                {columns.map((column) => (
+                {getColumns(data)?.map((column) => (
                   <td key={column.key} className="table-cell">
                     {item[column.key]}
                   </td>
