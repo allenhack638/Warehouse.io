@@ -98,16 +98,6 @@ const GoogleSheetTable = () => {
             </tbody>
           </table>
         )}
-
-        {/* {data?.error ? (
-          <h2 className="table-error-message">{data?.error}</h2> ? (
-            data?.length === 0 ?
-          ) : (
-            <h2></h2>
-          )
-        ) : ( */}
-
-        {/* )} */}
       </div>
     </>
   );

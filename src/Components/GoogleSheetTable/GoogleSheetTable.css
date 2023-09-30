@@ -26,7 +26,7 @@
   margin: 0;
   padding: 0;
 }
-.inner-div{
+.inner-div {
   display: flex;
   align-items: center;
 }
@@ -47,6 +47,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px;
   gap: 5px;
 }
 .your-container a:hover {
@@ -90,7 +91,8 @@
   }
 
   .data-table {
-    display: block;
+    /* display: block; */
+    width: 100%;
     overflow-x: auto;
   }
 

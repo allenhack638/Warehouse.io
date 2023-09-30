@@ -98,6 +98,6 @@ button[type="button"] {
 
 @media (max-width: 1000px) {
   .modal-content {
-    top: 20%;
+    top: 35%;
   }
 }
