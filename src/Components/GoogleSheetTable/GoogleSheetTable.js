@@ -8,7 +8,7 @@ import { SyncData } from "../apicalls/ApiCalls";
 const GoogleSheetTable = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [FormModal, setFormModal] = useState(true);
+  const [FormModal, setFormModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,18 +24,18 @@ const GoogleSheetTable = () => {
     fetchData();
   }, []);
 
+  const onSubmit = async () => {
+    setFormModal(false);
+    setLoading(true);
+    const data = await SyncData();
+    setData(data);
+    setLoading(false);
+  };
+
   return (
     <>
       {FormModal && (
-        <AddRowForm
-          onClose={async () => {
-            setFormModal(false);
-            setLoading(true);
-            const data = await SyncData();
-            setData(data);
-            setLoading(false);
-          }}
-        />
+        <AddRowForm onClose={() => setFormModal(false)} onSubmit={onSubmit} />
       )}
       <div className="your-container">
         <button
@@ -58,6 +58,7 @@ const GoogleSheetTable = () => {
         <a
           href="https://docs.google.com/spreadsheets/d/1MVWKhUYJgcaxBXu3ESugjfV9aEJIyiwbGECqRD3VS0o/edit#gid=0"
           target="_blank"
+          rel="noreferrer"
         >
           Google Sheet
         </a>
@@ -72,7 +73,7 @@ const GoogleSheetTable = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, rowIndex) => (
+            {data?.map((item, rowIndex) => (
               <tr key={rowIndex} className="table-row">
                 {getColumns(data)?.map((column) => (
                   <td key={column.key} className="table-cell">

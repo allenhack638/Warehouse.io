@@ -1,30 +1,20 @@
-import React from "react";
+import { useState } from "react";
 import { Formik, Form } from "formik";
-import * as yup from "yup";
-import "./Modal.css";
+
+import "./AddRowForm.css";
 
 import { CreateRow } from "../apicalls/ApiCalls";
+import { initialValues, validationSchema } from "../Functions/Function";
 
-const AddRowForm = ({ onClose }) => {
+const AddRowForm = ({ onClose, onSubmit }) => {
+  const [AddRowButton, setAddRowButton] = useState(false);
+
   async function handleSubmit(values) {
-    try {
-      await CreateRow(values);
-    } catch (error) {
-      console.log(error);
-    }
-    onClose();
+    setAddRowButton(true);
+    await CreateRow(values);
+    setAddRowButton(false);
+    onSubmit();
   }
-
-  const initialValues = {
-    ID: "",
-    "Avatar Name": "",
-    "Performance Score": "",
-  };
-  const validationSchema = yup.object().shape({
-    ID: yup.string().required("ID is required"),
-    "Avatar Name": yup.string().required("Avatar Name is required"),
-    "Performance Score": yup.string().required("Performance Score is required"),
-  });
 
   return (
     <div className="modal">
@@ -84,7 +74,7 @@ const AddRowForm = ({ onClose }) => {
                     </p>
                   )}
                 <button type="submit" className="add-button">
-                  Add Row
+                  {AddRowButton ? "Adding Row.." : "Add Row"}
                 </button>
               </Form>
             );
